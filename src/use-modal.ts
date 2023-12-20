@@ -1,5 +1,7 @@
 import type { MouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+// @TODO eslint: v4 not found in 'uuid'  import/named
+// eslint-disable-next-line
 import { v4 as uuidv4 } from 'uuid';
 import { useModalContext } from './context';
 import type { IDefaultModalProps, IModalHookRef, IModalItem } from './types';
