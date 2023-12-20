@@ -24,11 +24,6 @@ jobs:
       - name: Typescript check
         run: npm run ts:check
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: coverage-lcov
-          path: coverage
-
       - name: Build
         run: |
           npm pkg delete scripts.prepare
@@ -45,11 +40,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - uses: actions/download-artifact@master
-        with:
-          name: coverage-lcov
-          path: coverage
 
       - id: package-version
         run: npx @lomray/microservices-cli package-version
