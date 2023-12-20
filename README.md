@@ -9,7 +9,6 @@
   <img src="https://sonarcloud.io/api/project_badges/measure?project=react-modals&metric=ncloc" alt="Lines of Code">
   <img src="https://img.shields.io/npm/l/@lomray/react-modals" alt="size">
   <img src="https://img.shields.io/npm/v/@lomray/react-modals?label=semantic%20release&logo=semantic-release" alt="semantic version">
-  <img src="https://sonarcloud.io/api/project_badges/measure?project=react-modals&metric=coverage" alt="code coverage">
 </p>
 
 ## Table of contents

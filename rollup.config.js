@@ -3,7 +3,6 @@ import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { folderInput } from 'rollup-plugin-folder-input';
 import copy from 'rollup-plugin-copy';
-import { preserveShebangs } from 'rollup-plugin-preserve-shebangs';
 
 export default {
   input: [
@@ -17,23 +16,7 @@ export default {
     preserveModulesRoot: 'src',
     exports: 'auto',
   },
-  external: [
-    'fs',
-    'path',
-    'url',
-    'express',
-    'react',
-    'readline',
-    'hjson',
-    'node:perf_hooks',
-    'node:path',
-    'node:dns',
-    'node:os',
-    'node:process',
-    'node:child_process',
-    'node:fs',
-    'node:url',
-  ],
+  external: ['react'],
   plugins: [
     folderInput(),
     peerDepsExternal({
@@ -52,7 +35,6 @@ export default {
         ]
       }),
     }),
-    preserveShebangs(),
     terser(),
     copy({
       targets: [
