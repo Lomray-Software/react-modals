@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowUnreachableCode": false,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "lib": [
+      "es6",
+      "es2015",
+      "es2017",
+      "es2019",
+      "es2021",
+      "dom"
+    ],
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "declaration": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "strict": false,
+    "pretty": true,
+    "useDefineForClassFields": true,
+    "jsx": "react",
+    "baseUrl": "./src"
+  },
+  "exclude": [
+    "node_modules",
+    "lib",
+    "commitlint.config.js",
+    "rollup.config.js"
+  ]
+}
