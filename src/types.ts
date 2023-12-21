@@ -1,6 +1,15 @@
 import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
 import type { ReactNode, FC } from 'react';
+import type CHANNEL from './channel';
 import type useModal from './use-modal';
+
+export interface IEventsPayload<TProps extends object = Record<string, any>> {
+  event: CHANNEL;
+  id?: string;
+  Component: IModalItem<TProps>['Component'];
+  props?: IDefaultModalProps;
+  componentProps?: IModalItem<TProps>['componentProps'];
+}
 
 export interface IModalItem<TProps extends object = Record<string, any>> {
   props: IModalProps;
@@ -27,10 +36,6 @@ export interface IModalContext extends IModalContextState {
     componentProps?: IModalItem<TProps>['componentProps'],
     id?: string,
   ) => void;
-  createModal: <TProps extends object = Record<string, any>>(
-    Component: IModalItem<TProps>['Component'],
-    type: string,
-  ) => (props: OmitBaseModalProps<TProps>) => void;
   hideModal: (id?: string | object) => void;
 }
 

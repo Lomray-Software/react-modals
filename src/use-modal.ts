@@ -1,9 +1,10 @@
+import EventManager from '@lomray/event-manager';
 import type { MouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 // @TODO eslint: v4 not found in 'uuid'  import/named
-// eslint-disable-next-line
+// eslint-disable-next-line import/named
 import { v4 as uuidv4 } from 'uuid';
-import { useModalContext } from './context';
+import CHANNEL from './channel';
 import type { IDefaultModalProps, IModalHookRef, IModalItem } from './types';
 
 /**
@@ -14,8 +15,6 @@ const useModal = <TProps extends object>(
   props?: IDefaultModalProps<TProps>,
   componentProps?: IModalItem<TProps>['componentProps'],
 ) => {
-  const { openModal, hideModal } = useModalContext();
-
   /**
    * Uniq ID for each hook
    */
@@ -28,15 +27,28 @@ const useModal = <TProps extends object>(
     (e?: MouseEvent<any> | null, params?: IModalItem<TProps>['componentProps']) => void
   >(
     (e, params) => {
-      openModal<TProps>(Component, props, { ...componentProps, ...params } as TProps, id.current);
+      EventManager.publish(CHANNEL.OPEN, {
+        event: CHANNEL.OPEN,
+        Component,
+        props,
+        componentProps: { ...componentProps, ...params },
+        id: id.current,
+      });
     },
-    [Component, componentProps, openModal, props],
+    [Component, componentProps, props],
   );
 
   /**
    * Hide modal with current uniq ID
    */
-  const hide = useCallback(() => hideModal(id.current), [hideModal]);
+  const hide = useCallback(
+    () =>
+      EventManager.publish(CHANNEL.HIDE, {
+        event: CHANNEL.HIDE,
+        id: id.current,
+      }),
+    [],
+  );
 
   /**
    * Set functions to ref
