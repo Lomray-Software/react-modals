@@ -1,63 +1,51 @@
-import type { FCC } from '@lomray/client-helpers/interfaces/fc-with-children';
-import type { ReactNode, FC } from 'react';
+import type { FCC } from '@lomray/client-helpers/interfaces';
+import type { FC, MouseEvent } from 'react';
 import type CHANNEL from './channel';
-import type useModal from './use-modal';
 
-export interface IEventsPayload<TProps extends object = Record<string, any>> {
+export interface IEventsPayload<TCP extends object> {
   event: CHANNEL;
-  id?: string;
-  Component: IModalItem<TProps>['Component'];
-  props?: IDefaultModalProps;
-  componentProps?: IModalItem<TProps>['componentProps'];
-}
-
-export interface IModalItem<TProps extends object = Record<string, any>> {
-  props: IModalProps;
-  Component: FCC<TProps & IModalToggle> | null;
   id: string;
-  type: string;
-  componentProps?: TProps;
+  Component: FC<TCP>;
+  modalProps?: IModalProps<TCP>;
+  componentProps?: TCP;
 }
 
-interface IModalContextState<TComponentProps extends object = Record<string, any>> {
-  state: IModalItem<TComponentProps>[];
+export interface IModalItem<TCP extends object> {
+  Component: FC<TCP> | null;
+  modalProps: IModalProps<TCP> & IModalToggle;
+  id: string;
+  componentProps?: TCP;
 }
 
-type OmitBaseModalProps<TProps> = Omit<TProps, 'isVisible' | 'toggle'>;
+export type THideModal = (id?: string | object) => void;
 
-export type IDefaultModalProps<TProps extends object = Record<string, any>> = OmitBaseModalProps<
-  IModalProps<TProps>
->;
-
-export interface IModalContext extends IModalContextState {
-  openModal: <TProps extends object = Record<string, any>>(
-    Component: IModalItem<TProps>['Component'],
-    props?: IDefaultModalProps,
-    componentProps?: IModalItem<TProps>['componentProps'],
-    id?: string,
-  ) => void;
-  hideModal: (id?: string | object) => void;
-}
-
-export interface IModalRoot<TProps extends object = Record<string, any>> {
-  Modal: FC<IModalProps<TProps> & IModalToggle>;
+export interface IModalRoot<TCP extends object> {
+  Modal: FCC<IModalProps<TCP> & IModalToggle>;
 }
 
 export interface IModalToggle {
   isVisible: boolean;
-  toggle: () => void;
+  closeModal: () => void;
 }
 
-export interface IModalParentId {
-  parentId: string;
+export interface IModalHookRef<TCP extends object> {
+  open: (e?: MouseEvent<any> | null, componentProps?: OmitProps<TCP>) => void;
+  hide: () => void;
 }
 
-export interface IModalHookRef<TProps extends object> {
-  open: ReturnType<typeof useModal<TProps>>[0];
-  hide: ReturnType<typeof useModal<TProps>>[1];
+export interface IModalProps<TCP extends object> {
+  hookRef?: IModalHookRef<TCP>;
 }
 
-export interface IModalProps<TProps extends object = Record<string, any>> extends IModalToggle {
-  children?: ReactNode;
-  hookRef?: IModalHookRef<TProps>;
-}
+export type OmitStoreProps<T> = {
+  [P in keyof T as P extends  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    | `${'store' | 'Store'}${infer Suffix}`
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    | `${infer Prefix}${'store' | 'Store'}`
+    ? never
+    : P]: T[P];
+};
+
+export type OmitToggleProps<TP> = Omit<TP, 'closeModal' | 'isVisible'>;
+
+export type OmitProps<T> = Omit<OmitStoreProps<OmitToggleProps<T>>, 'store'>;

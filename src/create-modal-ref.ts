@@ -1,6 +1,6 @@
-import type { IModalHookRef } from './types';
+import type { IModalHookRef, OmitProps } from './types';
 
-const createModalRef = <TProps extends object>(): IModalHookRef<TProps> => ({
+const createModalRef = <TCP extends object>(): IModalHookRef<OmitProps<TCP>> => ({
   open: () => undefined,
   hide: () => undefined,
 });

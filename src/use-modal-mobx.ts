@@ -1,18 +1,19 @@
 import { useStoreManagerParent } from '@lomray/react-mobx-manager';
-import type { IDefaultModalProps, IModalItem, IModalParentId } from './types';
+import type { FC } from 'react';
+import type { IModalProps, OmitProps } from './types';
 import useModal from './use-modal';
 
 /**
  * Use modal for custom inners
  */
-const useModalMobx = <TProps extends Record<string, any>>(
-  Component: IModalItem<TProps & IModalParentId>['Component'],
-  props?: IDefaultModalProps,
-  componentProps?: IModalItem<TProps & IModalParentId>['componentProps'],
+const useModalMobx = <TCP extends object>(
+  Component: FC<TCP>,
+  modalProps?: OmitProps<IModalProps<TCP>> & Partial<Record<string, any>>,
+  componentProps?: OmitProps<TCP>,
 ) => {
   const parentId = useStoreManagerParent();
 
-  return useModal(Component as never, props, { ...componentProps, parentId });
+  return useModal(Component, modalProps, { ...componentProps, parentId } as TCP);
 };
 
 export default useModalMobx;
