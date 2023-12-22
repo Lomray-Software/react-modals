@@ -65,15 +65,15 @@ import type { IModalToggle } from '@lomray/react-modals';
 import { createModalRef, useModal } from '@lomray/react-modals';
 import React, { FC } from 'react';
 
-export interface IMyModal {
+export interface IMyModal extends IModalToggle {
   text: string;
 }
 
-const MyModal: FC<IMyModal & IModalToggle> = ({ toggle, isVisible, text = 'default' }) => (
+const MyModal: FC<IMyModal> = ({ closeModal, isVisible, text = 'default' }) => (
   <div style={{ width: 300 }}>
     <p>isVisible: {String(isVisible)}</p>
     <p>text: {text}</p>
-    <button onClick={toggle}>close</button>
+    <button onClick={closeModal}>close</button>
   </div>
 );
 
