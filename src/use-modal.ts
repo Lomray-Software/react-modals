@@ -1,21 +1,20 @@
-import type { MouseEvent } from 'react';
+import EventManager from '@lomray/event-manager';
+import type { FC, MouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 // @TODO eslint: v4 not found in 'uuid'  import/named
-// eslint-disable-next-line
+// eslint-disable-next-line import/named
 import { v4 as uuidv4 } from 'uuid';
-import { useModalContext } from './context';
-import type { IDefaultModalProps, IModalHookRef, IModalItem } from './types';
+import CHANNEL from './channel';
+import type { IModalProps, OmitToggleProps, THideModal } from './types';
 
 /**
  * Use modal for custom inners
  */
-const useModal = <TProps extends object>(
-  Component: IModalItem<TProps>['Component'],
-  props?: IDefaultModalProps<TProps>,
-  componentProps?: IModalItem<TProps>['componentProps'],
-) => {
-  const { openModal, hideModal } = useModalContext();
-
+const useModal = <TCP extends object>(
+  Component: FC<TCP>,
+  modalProps?: OmitToggleProps<IModalProps<TCP>>,
+  componentProps?: OmitToggleProps<TCP>,
+): [(e?: MouseEvent<any> | null, params?: OmitToggleProps<TCP>) => void, THideModal] => {
   /**
    * Uniq ID for each hook
    */
@@ -24,31 +23,42 @@ const useModal = <TProps extends object>(
   /**
    * Open modal
    */
-  const open = useCallback<
-    (e?: MouseEvent<any> | null, params?: IModalItem<TProps>['componentProps']) => void
-  >(
+  const open = useCallback<(e?: MouseEvent<any> | null, params?: TCP) => void>(
     (e, params) => {
-      openModal<TProps>(Component, props, { ...componentProps, ...params } as TProps, id.current);
+      EventManager.publish(CHANNEL.OPEN, {
+        event: CHANNEL.OPEN,
+        Component,
+        modalProps,
+        componentProps: { ...componentProps, ...params },
+        id: id.current,
+      });
     },
-    [Component, componentProps, openModal, props],
+    [Component, componentProps, modalProps],
   );
 
   /**
    * Hide modal with current uniq ID
    */
-  const hide = useCallback(() => hideModal(id.current), [hideModal]);
+  const hide = useCallback(
+    () =>
+      EventManager.publish(CHANNEL.HIDE, {
+        event: CHANNEL.HIDE,
+        id: id.current,
+      }),
+    [],
+  );
 
   /**
    * Set functions to ref
    */
   useEffect(() => {
-    if (!props?.hookRef) {
+    if (!modalProps?.hookRef) {
       return;
     }
 
-    (props.hookRef as IModalHookRef<TProps>).open = open;
-    (props.hookRef as IModalHookRef<TProps>).hide = hide;
-  }, [open, hide, props?.hookRef]);
+    modalProps.hookRef.open = open;
+    modalProps.hookRef.hide = hide;
+  }, [open, hide, modalProps?.hookRef]);
 
   return useMemo(() => [open, hide], [hide, open]);
 };

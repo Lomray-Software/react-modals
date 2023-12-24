@@ -1,5 +1,3 @@
-export * from './context';
-
 export { default as createModalRef } from './create-modal-ref';
 
 export { default as ModalRoot } from './root';

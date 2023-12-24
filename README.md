@@ -50,12 +50,12 @@ import ModalRoot from '@lomray/react-modals';
 import Layout from './components/layout';
 import Dialog from './modals/default';
 
-const App = () => {
-  <ModalProvider>
+const App = () => (
+  <>
     <Layout />
     <ModalRoot Modal={(props) => <Dialog {...props} />} />
-  </ModalProvider>
-}
+  </>
+)
 ```
 
 3. Create new  modal layout with useModal hook
@@ -67,15 +67,15 @@ import type { IModalToggle } from '@lomray/react-modals';
 import { createModalRef, useModal } from '@lomray/react-modals';
 import React, { FC } from 'react';
 
-export interface IMyModal {
+export interface IMyModal extends IModalToggle {
   text: string;
 }
 
-const MyModal: FC<IMyModal & IModalToggle> = ({ toggle, isVisible, text = 'default' }) => (
+const MyModal: FC<IMyModal> = ({ closeModal, isVisible, text = 'default' }) => (
   <div style={{ width: 300 }}>
-    <p>isVisible: {isVisible}</p>
+    <p>isVisible: {String(isVisible)}</p>
     <p>text: {text}</p>
-    <button onClick={toggle}>close</button>
+    <button onClick={closeModal}>close</button>
   </div>
 );
 
@@ -111,10 +111,10 @@ const Layout: FC = () => {
 
   return (
     <div>
-      <button onClick={(e) => open(e, { text: 'hello' })}>
+      <button onClick={(e) => open(e, { text: 'open modal via hook' })}>
         open modal via hook
       </button>
-      <button onClick={(e) => myModalRef?.open(e)}>
+      <button onClick={(e) => myModalRef?.open(e, { text: 'open modal via global' })}>
         open modal via global
       </button>
     </div>
