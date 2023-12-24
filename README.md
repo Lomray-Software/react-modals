@@ -50,10 +50,12 @@ import ModalRoot from '@lomray/react-modals';
 import Layout from './components/layout';
 import Dialog from './modals/default';
 
-const App = () => {
-  <Layout />
-  <ModalRoot Modal={(props) => <Dialog {...props} />} />
-}
+const App = () => (
+  <>
+    <Layout />
+    <ModalRoot Modal={(props) => <Dialog {...props} />} />
+  </>
+)
 ```
 
 3. Create new  modal layout with useModal hook

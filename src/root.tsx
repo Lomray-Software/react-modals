@@ -5,7 +5,7 @@ import CHANNEL from './channel';
 import type { IEventsPayload, IModalItem, IModalProps, IModalRoot, THideModal } from './types';
 
 /**
- * ModalRoot Consumer
+ * ModalRoot
  * @constructor
  */
 const ModalRoot = <TCP extends object>({ Modal }: IModalRoot<TCP>) => {

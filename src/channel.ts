@@ -1,6 +1,6 @@
 enum CHANNEL {
-  OPEN = 'OPEN',
-  HIDE = 'HIDE',
+  OPEN = 'react-modals:open',
+  HIDE = 'react-modals:hide',
 }
 
 export default CHANNEL;

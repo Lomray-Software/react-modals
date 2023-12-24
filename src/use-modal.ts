@@ -5,16 +5,16 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 // eslint-disable-next-line import/named
 import { v4 as uuidv4 } from 'uuid';
 import CHANNEL from './channel';
-import type { IModalProps, OmitProps, THideModal } from './types';
+import type { IModalProps, OmitToggleProps, THideModal } from './types';
 
 /**
  * Use modal for custom inners
  */
 const useModal = <TCP extends object>(
   Component: FC<TCP>,
-  modalProps?: OmitProps<IModalProps<TCP>>,
-  componentProps?: OmitProps<TCP>,
-): [(e?: MouseEvent<any> | null, params?: OmitProps<TCP>) => void, THideModal] => {
+  modalProps?: OmitToggleProps<IModalProps<TCP>>,
+  componentProps?: OmitToggleProps<TCP>,
+): [(e?: MouseEvent<any> | null, params?: OmitToggleProps<TCP>) => void, THideModal] => {
   /**
    * Uniq ID for each hook
    */

@@ -29,7 +29,7 @@ export interface IModalToggle {
 }
 
 export interface IModalHookRef<TCP extends object> {
-  open: (e?: MouseEvent<any> | null, componentProps?: OmitProps<TCP>) => void;
+  open: (e?: MouseEvent<any> | null, componentProps?: OmitToggleProps<TCP>) => void;
   hide: () => void;
 }
 
@@ -37,15 +37,4 @@ export interface IModalProps<TCP extends object> {
   hookRef?: IModalHookRef<TCP>;
 }
 
-export type OmitStoreProps<T> = {
-  [P in keyof T as P extends  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    | `${'store' | 'Store'}${infer Suffix}`
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    | `${infer Prefix}${'store' | 'Store'}`
-    ? never
-    : P]: T[P];
-};
-
 export type OmitToggleProps<TP> = Omit<TP, 'closeModal' | 'isVisible'>;
-
-export type OmitProps<T> = Omit<OmitStoreProps<OmitToggleProps<T>>, 'store'>;
