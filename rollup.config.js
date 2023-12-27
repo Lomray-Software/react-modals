@@ -40,6 +40,7 @@ export default {
       targets: [
         { src: 'package.json', dest: 'lib' },
         { src: 'README.md', dest: 'lib' },
+        { src: 'LICENSE', dest: 'lib' },
       ]
     })
   ],
