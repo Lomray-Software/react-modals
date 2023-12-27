@@ -114,8 +114,8 @@ const Layout: FC = () => {
       <button onClick={(e) => open(e, { text: 'open modal via hook' })}>
         open modal via hook
       </button>
-      <button onClick={(e) => myModalRef?.open(e, { text: 'open modal via global' })}>
-        open modal via global
+      <button onClick={(e) => myModalRef?.open(e, { text: 'open modal via ref' })}>
+        open modal via ref
       </button>
     </div>
   );
