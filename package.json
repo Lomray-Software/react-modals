@@ -31,6 +31,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@lomray/event-manager": "^2.0.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
