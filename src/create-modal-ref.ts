@@ -3,8 +3,8 @@ import type { IModalHookRef } from './types';
 
 const createModalRef = <
   TCP extends object,
-  TS extends TMapStores = Record<string, any>,
->(): IModalHookRef<Omit<TCP, keyof TS>> => ({
+  TS extends TMapStores = NonNullable<unknown>,
+>(): IModalHookRef<TS extends TMapStores ? Omit<TCP, keyof TS> : TCP> => ({
   open: () => undefined,
   hide: () => undefined,
 });
