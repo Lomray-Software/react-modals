@@ -82,7 +82,7 @@ const MyModal: FC<IMyModal> = ({ closeModal, isVisible, text = 'default' }) => (
 export const myModalRef = createModalRef<IMyModal>();
 
 const useMyModal = () =>
-  useModal<IMyModal>(MyModal, {
+  useModal(MyModal, {
     className: 'additionalClassName',
     hookRef: myModalRef,
   });

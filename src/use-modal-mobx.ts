@@ -9,8 +9,8 @@ import useModal from './use-modal';
  */
 const useModalMobx = <TCP extends object, TS extends TMapStores>(
   Component: FC<TCP>,
-  modalProps?: OmitToggleProps<IModalProps<Omit<TCP, keyof TS>>>,
-  componentProps?: OmitToggleProps<TCP>,
+  modalProps?: OmitToggleProps<IModalProps<TCP>>,
+  componentProps?: Omit<OmitToggleProps<TCP>, keyof TS>,
 ): [
   (e?: MouseEvent<any> | null, params?: Omit<OmitToggleProps<TCP>, keyof TS>) => void,
   THideModal,
