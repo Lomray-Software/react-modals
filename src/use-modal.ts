@@ -1,5 +1,5 @@
 import EventManager from '@lomray/event-manager';
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 // @TODO eslint: v4 not found in 'uuid'  import/named
 // eslint-disable-next-line import/named
@@ -14,7 +14,7 @@ const useModal = <TCP extends object>(
   Component: FC<TCP>,
   modalProps?: OmitToggleProps<IModalProps<TCP>>,
   componentProps?: OmitToggleProps<TCP>,
-): [(e?: MouseEvent<any> | null, params?: OmitToggleProps<TCP>) => void, THideModal] => {
+): [(params?: OmitToggleProps<TCP>) => void, THideModal] => {
   /**
    * Uniq ID for each hook
    */
@@ -23,8 +23,8 @@ const useModal = <TCP extends object>(
   /**
    * Open modal
    */
-  const open = useCallback<(e?: MouseEvent<any> | null, params?: TCP) => void>(
-    (e, params) => {
+  const open = useCallback<(params?: TCP) => void>(
+    (params) => {
       EventManager.publish(CHANNEL.OPEN, {
         event: CHANNEL.OPEN,
         Component,
@@ -39,7 +39,7 @@ const useModal = <TCP extends object>(
   /**
    * Hide modal with current uniq ID
    */
-  const hide = useCallback(
+  const hide = useCallback<() => void>(
     () =>
       EventManager.publish(CHANNEL.HIDE, {
         event: CHANNEL.HIDE,
