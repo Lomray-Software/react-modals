@@ -1,6 +1,6 @@
 {
   "name": "@lomray/react-modals",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Context and hooks for using modal windows in React.",
   "type": "module",
   "keywords": [
