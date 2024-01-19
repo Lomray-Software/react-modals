@@ -1,5 +1,5 @@
 import type { FCC } from '@lomray/client-helpers/interfaces';
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import type CHANNEL from './channel';
 
 export interface IEventsPayload<TCP extends object> {
@@ -29,7 +29,7 @@ export interface IModalToggle {
 }
 
 export interface IModalHookRef<TCP extends object> {
-  open: (e?: MouseEvent<any> | null, componentProps?: OmitToggleProps<TCP>) => void;
+  open: (componentProps?: OmitToggleProps<TCP>) => void;
   hide: () => void;
 }
 

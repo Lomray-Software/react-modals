@@ -1,6 +1,6 @@
 import { useStoreManagerParent } from '@lomray/react-mobx-manager';
 import type { TMapStores } from '@lomray/react-mobx-manager';
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import type { IModalProps, OmitToggleProps, THideModal } from './types';
 import useModal from './use-modal';
 
@@ -11,10 +11,7 @@ const useModalMobx = <TCP extends object, TS extends TMapStores>(
   Component: FC<TCP>,
   modalProps?: OmitToggleProps<IModalProps<TCP>>,
   componentProps?: Omit<OmitToggleProps<TCP>, keyof TS>,
-): [
-  (e?: MouseEvent<any> | null, params?: Omit<OmitToggleProps<TCP>, keyof TS>) => void,
-  THideModal,
-] => {
+): [(params?: Omit<OmitToggleProps<TCP>, keyof TS>) => void, THideModal] => {
   const parentId = useStoreManagerParent();
 
   return useModal(
