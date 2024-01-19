@@ -124,7 +124,7 @@ const Layout: FC = () => {
 export default Layout;
 ```
 
-## Code examples
+## Demo
 Explore [demo app](https://github.com/Lomray-Software/modal-context-example) to more understand.
 
 ## Bugs and feature requests
