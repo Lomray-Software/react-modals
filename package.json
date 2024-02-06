@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Context and hooks for using modal windows in React.",
   "type": "module",
+  "main": "index.js",
   "keywords": [
     "js",
     "modals",
