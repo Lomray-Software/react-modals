@@ -27,102 +27,66 @@ npm i --save @lomray/react-modals
 
 ## How to use
 
-1. Add modal component types
-```typescript
-/**
- * types/lomray/react-modals.d.ts
- */
-import { IModalProps as IModalPropsDefault } from '@lomray/react-modals'
-import { TDialogProps } from '@components/modals/default'
+Use this to open application-owned modal content from hooks or refs. It supplies
+lifecycle events and a root renderer, not styling, focus management, keyboard
+handling, or an accessible dialog implementation. Supply those in your `Modal`
+component. There is no `ModalProvider` export; `ModalRoot` is a named export.
 
-declare module '@lomray/react-modals' {
-  interface IModalProps extends IModalPropsDefault, TDialogProps {}
-}
-```
+Mount one `ModalRoot` per application and open modals after it has mounted. Roots
+listen to shared event channels, so several roots are not independent scopes.
+The small shell below demonstrates the wiring only, not a production dialog.
 
-2. Add ModalProvider and ModalRoot with Dialog (Modal) component
-```typescript jsx
-/**
- * src/app.tsx
- */
-import { ModalProvider } from '@lomray/react-modals';
-import ModalRoot from '@lomray/react-modals';
-import Layout from './components/layout';
-import Dialog from './modals/default';
+<!-- docs-test:example -->
+```tsx
+import React, { type FC, type PropsWithChildren } from 'react';
+import { ModalRoot, useModal, type IModalToggle } from '@lomray/react-modals';
 
-const App = () => (
-  <>
-    <Layout />
-    <ModalRoot Modal={(props) => <Dialog {...props} />} />
-  </>
-)
-```
+const ModalShell: FC<PropsWithChildren<IModalToggle>> = ({ children, isVisible }) =>
+  isVisible ? <section>{children}</section> : null;
 
-3. Create new  modal layout with useModal hook
-```typescript jsx
-/**
- * src/my-modal.tsx
- */
-import type { IModalToggle } from '@lomray/react-modals';
-import { createModalRef, useModal } from '@lomray/react-modals';
-import React, { FC } from 'react';
-
-export interface IMyModal extends IModalToggle {
+interface MessageProps extends IModalToggle {
   text: string;
 }
 
-const MyModal: FC<IMyModal> = ({ closeModal, isVisible, text = 'default' }) => (
-  <div style={{ width: 300 }}>
-    <p>isVisible: {String(isVisible)}</p>
-    <p>text: {text}</p>
-    <button onClick={closeModal}>close</button>
+const Message: FC<MessageProps> = ({ text, closeModal }) => (
+  <div>
+    <p>{text}</p>
+    <button onClick={closeModal}>Close</button>
   </div>
 );
 
-export const myModalRef = createModalRef<IMyModal>();
-
-const useMyModal = () =>
-  useModal(MyModal, {
-    className: 'additionalClassName',
-    hookRef: myModalRef,
-  });
-
-export default useMyModal;
-```
-
-In cases where your modal window needs to access the parent store in Mobx, use the useModalMobx hook.
-
-An example with Mobx can be found in Code examples
-```typescript jsx
-import { useModalMobx } from '@lomray/react-modals';
-```
-
-
-4. Use new modal in component via hook
-```typescript jsx
-/**
- * src/layout.tsx
- */
-import { FC } from 'react';
-import useMyModal, { myModalRef } from './my-modal';
-
-const Layout: FC = () => {
-  const [open] = useMyModal(); // [open, hide]
-
+const OpenButton = () => {
+  const [open, hide] = useModal(Message);
   return (
-    <div>
-      <button onClick={() => open({ text: 'open modal via hook' })}>
-        open modal via hook
-      </button>
-      <button onClick={() => myModalRef?.open({ text: 'open modal via ref' })}>
-        open modal via ref
-      </button>
-    </div>
+    <>
+      <button onClick={() => open({ text: 'Hello' })}>Open</button>
+      <button onClick={() => hide()}>Hide</button>
+    </>
   );
 };
 
-export default Layout;
+export const App = () => (
+  <>
+    <OpenButton />
+    <ModalRoot Modal={ModalShell} />
+  </>
+);
 ```
+
+`ModalRoot` unsubscribes when it unmounts. A modal opened by a hook does not
+automatically close when that hook's owner unmounts; call `hide()` when your
+application's lifecycle requires it. For access outside the owning component,
+pass a `createModalRef<MessageProps>()` as `hookRef` in the second argument to
+`useModal`; its methods are assigned by an effect, so do not call it before mount.
+
+`useModalMobx` also passes the current MobX parent context ID to modal content.
+It does not add a provider or style the dialog.
+
+Release 2.0.1 declares peers on React, react-router-dom, @lomray/client-helpers and
+@lomray/react-mobx-manager. Install compatible versions even for the basic hook;
+the package root re-exports the MobX hook. The docs test records its pinned
+fixture separately from these broad peer ranges. It checks opening and closing
+in a simulated DOM, not accessibility or an SSR integration.
 
 ## Demo
 Explore [demo app](https://github.com/Lomray-Software/modal-context-example) to more understand.

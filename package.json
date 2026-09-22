@@ -29,7 +29,8 @@
     "lint:check": "eslint --ext \".ts,.tsx\" \"src/**/*.{ts,tsx,*.ts,*tsx}\"",
     "lint:format": "eslint --fix --ext \".ts,.tsx\" \"src/**/*.{ts,tsx,*.ts,*tsx}\"",
     "ts:check": "tsc --project tsconfig.json --skipLibCheck --noemit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:build-tooling": "node scripts/check-build-tooling.test.mjs && node scripts/check-build-tooling.mjs"
   },
   "dependencies": {
     "@lomray/event-manager": "^2.0.2",
@@ -67,5 +68,10 @@
     "@lomray/react-mobx-manager": "*",
     "react": ">=17.0.2",
     "react-router-dom": ">=6.14.2"
+  },
+  "overrides": {
+    "rollup-plugin-ts": {
+      "browserslist-generator": "3.0.0"
+    }
   }
 }
