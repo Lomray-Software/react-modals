@@ -1,0 +1,30 @@
+{
+  "name": "react-modals-docs-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node check.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "esbuild": "0.25.10",
+    "typescript": "5.9.2",
+    "@types/node": "22.18.6",
+    "@lomray/react-modals": "2.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@types/react": "18.3.24",
+    "@types/react-dom": "18.3.7",
+    "jsdom": "26.1.0",
+    "@lomray/react-mobx-manager": "4.5.2",
+    "@lomray/client-helpers": "1.12.2",
+    "@lomray/consistent-suspense": "2.0.9",
+    "@lomray/event-manager": "2.0.3",
+    "react-router": "7.9.0",
+    "react-router-dom": "7.9.0",
+    "mobx": "6.13.7",
+    "mobx-react-lite": "4.1.0",
+    "lodash": "4.18.1",
+    "hoist-non-react-statics": "3.3.2"
+  }
+}
