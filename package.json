@@ -34,16 +34,15 @@
   },
   "dependencies": {
     "@lomray/event-manager": "^2.0.2",
-    "uuid": "^9.0.1"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@lomray/eslint-config": "^4.0.1",
     "@lomray/prettier-config": "^2.0.1",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.2",
     "@types/react-dom": "^18.2.17",
-    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
@@ -60,7 +59,7 @@
     "rollup-plugin-folder-input": "^1.0.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-ts": "^3.4.5",
-    "semantic-release": "^21.1.2",
+    "semantic-release": "^25.0.9",
     "typescript": "^5.3.2"
   },
   "peerDependencies": {
@@ -72,6 +71,7 @@
   "overrides": {
     "rollup-plugin-ts": {
       "browserslist-generator": "3.0.0"
-    }
+    },
+    "@babel/runtime": "^7.26.10"
   }
 }
